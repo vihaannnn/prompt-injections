@@ -1,0 +1,60 @@
+[Train] Loading data from data\train.csv ...
+[Train] Dataset size: 160 samples
+[Train] Label distribution:
+label
+0    117
+1     43
+Name: count, dtype: int64
+[Train] Building feature matrix (batch mode)...
+[Train] Feature matrix shape: (160, 1160)
+[Train] Train size: 128, Val size: 32
+[Train] Training classifier (Logistic Regression)...
+
+============================================================
+[Train] Validation Performance
+============================================================
+
+Confusion Matrix:
+[[22  1]
+ [ 2  7]]
+  TN=22, FP=1
+  FN=2, TP=7
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.9167    0.9565    0.9362        23
+           1     0.8750    0.7778    0.8235         9
+
+    accuracy                         0.9062        32
+   macro avg     0.8958    0.8671    0.8798        32
+weighted avg     0.9049    0.9062    0.9045        32
+
+
+ROC-AUC: 0.9662
+PR-AUC: 0.9154
+
+Best threshold (max F1): 0.0794
+  Precision: 0.7500
+  Recall: 1.0000
+  F1: 0.8571
+
+============================================================
+[Train] Cross-Validation (5-fold)
+============================================================
+F1 scores: [0.85714286 0.46153846 0.76923077 0.61538462 0.71428571]
+Mean F1: 0.6835 (+/- 0.2718)
+
+[Train] Model saved to: models\judge_clf.joblib
+
+============================================================
+[Train] Feature Importance (Top numeric features)
+============================================================
+  leakage_score            : +0.1286  ¡ô PASSED
+  sp_mo_overlap            : +0.0898  ¡ô PASSED
+  deny_count               : -0.0749  ¡õ FAILED
+  instruction_fragments    : +0.0745  ¡ô PASSED
+  sensitive_count          : +0.0717  ¡ô PASSED
+  up_mo_overlap            : +0.0618  ¡ô PASSED
+  mo_len                   : -0.0091  ¡õ FAILED
+  up_len                   : -0.0000  ¡õ FAILED

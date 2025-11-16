@@ -1,0 +1,63 @@
+============================================================
+PERFORMANCE BENCHMARK SUITE
+============================================================
+Judge stats: {'embed_model': 'all-MiniLM-L6-v2', 'risk_level': 'medium', 'threshold': np.float64(0.07939326843572611), 'cache_size': 0}
+
+============================================================
+Benchmark: Single Sample Inference
+============================================================
+Runs: 100
+Mean latency: 1.24 ms
+Median latency: 0.20 ms
+P95 latency: 0.43 ms
+P99 latency: 27.94 ms
+Throughput: 807.68 samples/sec
+
+============================================================
+Benchmark: Batch vs Single Processing
+============================================================
+
+Batch size: 1
+  Batch:  0.009s (8.91 ms/sample)
+  Single: 0.000s (0.24 ms/sample)
+  Speedup: 0.03x
+
+Batch size: 10
+  Batch:  0.015s (1.45 ms/sample)
+  Single: 0.001s (0.14 ms/sample)
+  Speedup: 0.09x
+
+Batch size: 50
+  Batch:  0.015s (0.31 ms/sample)
+  Single: 0.005s (0.10 ms/sample)
+  Speedup: 0.33x
+
+Batch size: 100
+  Batch:  0.016s (0.16 ms/sample)
+  Single: 0.009s (0.09 ms/sample)
+  Speedup: 0.57x
+
+Batch size: 500
+  Batch:  0.027s (0.05 ms/sample)
+  Single: 0.043s (0.09 ms/sample)
+  Speedup: 1.62x
+
+============================================================
+Benchmark: Cache Effect
+============================================================
+Samples: 100
+Cold start: 0.077s (0.77 ms/sample)
+Warm cache: 0.009s (0.09 ms/sample)
+Speedup: 8.46x
+Cache size: 7 entries
+
+============================================================
+Benchmark: Rule Path vs ML Path Latency
+============================================================
+Rule path: 0.000s (0.00 ms/sample)
+ML path:   0.030s (0.30 ms/sample)
+ML overhead: 66353.5%
+
+============================================================
+Benchmark completed!
+============================================================

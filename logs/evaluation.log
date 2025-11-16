@@ -1,0 +1,58 @@
+[Eval] Loading test data from data\test.csv ...
+[Eval] Test set size: 40
+[Eval] Loading model from models\judge_clf.joblib ...
+[Eval] Building features (batch mode)...
+[Eval] Predicting...
+
+============================================================
+[Eval] Results with DEFAULT threshold (0.5)
+============================================================
+
+Confusion Matrix:
+[[28  1]
+ [ 5  6]]
+  TN=28, FP=1
+  FN=5, TP=6
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.8485    0.9655    0.9032        29
+           1     0.8571    0.5455    0.6667        11
+
+    accuracy                         0.8500        40
+   macro avg     0.8528    0.7555    0.7849        40
+weighted avg     0.8509    0.8500    0.8382        40
+
+
+============================================================
+[Eval] Results with OPTIMAL threshold (0.0794)
+============================================================
+
+Confusion Matrix:
+[[24  5]
+ [ 1 10]]
+  TN=24, FP=5
+  FN=1, TP=10
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.9600    0.8276    0.8889        29
+           1     0.6667    0.9091    0.7692        11
+
+    accuracy                         0.8500        40
+   macro avg     0.8133    0.8683    0.8291        40
+weighted avg     0.8793    0.8500    0.8560        40
+
+
+ROC-AUC: 0.9530
+PR-AUC: 0.8857
+
+[Eval] Generating plots...
+[Eval] ROC curve saved to: results\roc_curve.png
+[Eval] PR curve saved to: results\pr_curve.png
+
+[Eval] Analyzing errors...
+[Eval] Error cases saved to: results\error_cases.csv
+[Eval] Predictions saved to: results\predictions.csv

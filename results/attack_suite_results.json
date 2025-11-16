@@ -1,0 +1,32 @@
+{
+  "total": 20,
+  "detected": 13,
+  "missed": 7,
+  "false_positives": 0,
+  "by_category": {
+    "Direct Extraction": {
+      "total": 3,
+      "detected": 2
+    },
+    "Indirect Extraction": {
+      "total": 4,
+      "detected": 3
+    },
+    "Roleplay Injection": {
+      "total": 4,
+      "detected": 2
+    },
+    "Encoding Obfuscation": {
+      "total": 3,
+      "detected": 1
+    },
+    "Context Manipulation": {
+      "total": 3,
+      "detected": 2
+    },
+    "Social Engineering": {
+      "total": 3,
+      "detected": 3
+    }
+  }
+}
