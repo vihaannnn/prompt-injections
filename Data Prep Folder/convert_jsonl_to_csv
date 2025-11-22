@@ -1,0 +1,92 @@
+#Generated with the help of ChatGPT, reference: https://chatgpt.com/share/692240f1-f4ec-8012-95ea-59ee119e829c
+import json
+import csv
+import os
+
+# --- Modify here ---
+# Make sure the file paths are correct.
+# Use raw strings (r'...') or double backslashes (\\) to avoid escaping issues.
+jsonl_file_path = r'tensor_trust\benchmarks\extraction-robustness\v1\extraction_robustness_dataset.jsonl'
+csv_file_path = 'extraction_robustness_dataset.csv'
+# --- End modification ---
+
+print(f"Starting robust conversion from {jsonl_file_path} to {csv_file_path}...")
+
+# Check if the input file exists
+if not os.path.exists(jsonl_file_path):
+    print(f"!!! ERROR: File not found: {jsonl_file_path}")
+    exit()
+
+line_count = 0
+success_count = 0
+error_count = 0
+headers_written = False
+writer = None
+
+try:
+    # 'utf-8-sig' handles BOM markers at the beginning of the file if they exist
+    with open(jsonl_file_path, 'r', encoding='utf-8-sig') as fin, \
+         open(csv_file_path, 'w', newline='', encoding='utf-8') as fout:
+
+        for line in fin:
+            line_count += 1
+            
+            try:
+                # Strip whitespace (e.g., skip blank lines)
+                line_content = line.strip()
+                if not line_content:
+                    # print(f"Info: Line {line_count} is empty, skipped.")
+                    continue  # Skip empty lines
+
+                # Parse JSON
+                data = json.loads(line_content)
+
+                # Ensure the parsed value is a dictionary (JSON object)
+                if not isinstance(data, dict):
+                    print(f"Warning: Line {line_count} is not a JSON object, skipped. Content: {line_content[:150]}...")
+                    error_count += 1
+                    continue
+
+                # For the first valid line, use the keys as the CSV header
+                if not headers_written:
+                    headers = data.keys()
+                    writer = csv.DictWriter(fout, fieldnames=headers)
+                    writer.writeheader()
+                    headers_written = True
+
+                # Write row to CSV
+                # Note: If JSONL keys are inconsistent, additional handling is needed.
+                if set(data.keys()) == set(writer.fieldnames):
+                    writer.writerow(data)
+                else:
+                    # Handle inconsistent keys: write only fields existing in header
+                    filtered_data = {key: data.get(key, None) for key in writer.fieldnames}
+                    writer.writerow(filtered_data)
+
+                success_count += 1
+
+            except json.JSONDecodeError as e:
+                # Key part: catch JSON decoding errors and continue
+                error_count += 1
+                print(f"!!! Warning: Line {line_count} has JSON formatting errors, skipped.")
+                print(f"    Error message: {e}")
+                print(f"    Problematic content (first 200 chars): {line_content[:200]}")
+            
+            except Exception as e:
+                # Catch any unexpected errors
+                error_count += 1
+                print(f"!!! Warning: Unexpected error on line {line_count}: {e}, skipped.")
+                print(f"    Problematic content (first 200 chars): {line_content[:200]}")
+
+    print("\n--- Conversion complete ---")
+    if line_count == 0:
+        print("The file is empty or unreadable.")
+    else:
+        print(f"Total lines read: {line_count}")
+        print(f"Successfully converted lines: {success_count}")
+        print(f"Failed/skipped lines: {error_count}")
+
+except FileNotFoundError:
+    print(f"Error: Input file not found: {jsonl_file_path}")
+except Exception as e:
+    print(f"Fatal error occurred: {e}")
