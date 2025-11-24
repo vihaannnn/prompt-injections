@@ -1,0 +1,76 @@
+Defense Effectiveness Evaluation Report (FILTERED)
+================================================================================
+
+SCENARIO 1: WITH ACCESS CODE
+
+Defense Evaluation Results (FILTERED VERSION):
+================================================
+Total Attacks in Dataset: 100
+  - Evaluated (with improved prompts): 38
+  - Skipped (no improved prompts): 62
+
+Among Evaluated Attacks Only:
+------------------------------
+Original Baseline:
+  - Successful attacks: 35 (92.1%)
+  - Failed attacks: 3 (789.5%)
+
+After Improved Defense:
+  - Successful attacks: 27 (71.1%)
+  - Failed attacks: 11 (2894.7%)
+
+True Improvement:
+  - Success rate reduction: 21.1%
+  - Newly blocked: 11
+  - Newly successful: 3
+  
+Statistical Significance:
+  - McNemar's test p-value: 0.0614
+  - Significant: NO (alpha=0.05)
+
+Note: This evaluation ONLY considers attacks with improved prompts.
+Attacks without improved prompts are excluded from metrics to avoid
+bias from weak original prompts.
+
+
+================================================================================
+
+SCENARIO 2: WITHOUT ACCESS CODE
+
+Defense Evaluation Results (FILTERED VERSION):
+================================================
+Total Attacks in Dataset: 100
+  - Evaluated (with improved prompts): 20
+  - Skipped (no improved prompts): 80
+
+Among Evaluated Attacks Only:
+------------------------------
+Original Baseline:
+  - Successful attacks: 18 (90.0%)
+  - Failed attacks: 2 (1000.0%)
+
+After Improved Defense:
+  - Successful attacks: 10 (50.0%)
+  - Failed attacks: 10 (5000.0%)
+
+True Improvement:
+  - Success rate reduction: 40.0%
+  - Newly blocked: 9
+  - Newly successful: 1
+  
+Statistical Significance:
+  - McNemar's test p-value: 0.0269
+  - Significant: YES (alpha=0.05)
+
+Note: This evaluation ONLY considers attacks with improved prompts.
+Attacks without improved prompts are excluded from metrics to avoid
+bias from weak original prompts.
+
+
+================================================================================
+
+COMPARISON
+--------------------------------------------------------------------------------
+
+Defense improvement difference: -18.9 percentage points
+-> WITHOUT access code scenarios show BETTER defense improvement
