@@ -1,0 +1,266 @@
+
+================================================================================
+LLM PROMPT INJECTION DEFENSE: STATISTICAL ANALYSIS REPORT
+================================================================================
+
+Research Question: Does including access codes in system prompts affect 
+the effectiveness of prompt injection defense?
+
+Data Source: Duke University Cybersecurity 590 Research Project
+Analysis Date: November 2024
+
+================================================================================
+SECTION 1: DATA SUMMARY
+================================================================================
+
+SCENARIO 1: WITH ACCESS CODE IN SYSTEM PROMPT
+----------------------------------------------
+Total attacks in dataset:       100
+Attacks with improved prompts:  38 (evaluated)
+Attacks without improvements:   62 (skipped)
+
+Original Results (Among Evaluated):
+  - Successful attacks:         35 (92.1%)
+  - Failed attacks:             3 (7.9%)
+
+After Defense:
+  - Successful attacks:         27 (71.1%)
+  - Failed attacks:             11 (28.9%)
+
+Changes:
+  - Newly blocked by defense:   11
+  - Newly successful (worse):   3
+
+
+SCENARIO 2: WITHOUT ACCESS CODE IN SYSTEM PROMPT
+-------------------------------------------------
+Total attacks in dataset:       100
+Attacks with improved prompts:  20 (evaluated)
+Attacks without improvements:   80 (skipped)
+
+Original Results (Among Evaluated):
+  - Successful attacks:         18 (90.0%)
+  - Failed attacks:             2 (10.0%)
+
+After Defense:
+  - Successful attacks:         10 (50.0%)
+  - Failed attacks:             10 (50.0%)
+
+Changes:
+  - Newly blocked by defense:   9
+  - Newly successful (worse):   1
+
+
+================================================================================
+SECTION 2: EFFECT SIZE ANALYSIS (COHEN'S H)
+================================================================================
+
+Cohen's h measures the magnitude of difference between two proportions.
+Formula: h = 2 * arcsin(sqrt(p1)) - 2 * arcsin(sqrt(p2))
+
+INTERPRETATION SCALE:
+  |h| < 0.2   Small effect
+  |h| = 0.5   Medium effect  
+  |h| > 0.8   Large effect
+
+RESULTS:
+
+With Access Code:
+  Original rate:    92.1%
+  Improved rate:    71.1%
+  Cohen's h:        -0.5666
+  |h|:              0.5666
+  Interpretation:   Medium effect
+
+Without Access Code:
+  Original rate:    90.0%
+  Improved rate:    50.0%
+  Cohen's h:        -0.9273
+  |h|:              0.9273
+  Interpretation:   Large effect
+
+COMPARISON:
+  Difference in |h|: 0.3607
+  Larger effect:     Without Access Code
+
+
+================================================================================
+SECTION 3: CONFIDENCE INTERVALS (WILSON SCORE METHOD)
+================================================================================
+
+The Wilson score interval provides more accurate coverage than the normal 
+approximation, especially for small samples or extreme proportions.
+
+95% CONFIDENCE INTERVALS:
+
+With Access Code (n=38):
+  Original Success Rate:
+    Point estimate:   92.1%
+    95% CI:           [79.2%, 97.3%]
+    
+  Improved Success Rate:
+    Point estimate:   71.1%
+    95% CI:           [55.2%, 83.0%]
+    
+  Success Rate Reduction:
+    Point estimate:   21.1%
+    95% CI:           [3.5%, 37.7%]
+
+Without Access Code (n=20):
+  Original Success Rate:
+    Point estimate:   90.0%
+    95% CI:           [69.9%, 97.2%]
+    
+  Improved Success Rate:
+    Point estimate:   50.0%
+    95% CI:           [29.9%, 70.1%]
+    
+  Success Rate Reduction:
+    Point estimate:   40.0%
+    95% CI:           [11.6%, 61.3%]
+
+NOTE: Wider intervals for "Without Access Code" due to smaller sample size (n=20 vs n=38).
+
+
+================================================================================
+SECTION 4: MCNEMAR'S TEST FOR PAIRED DATA
+================================================================================
+
+McNemar's test assesses whether the changes in attack outcomes (blocked vs 
+newly successful) are statistically significant.
+
+CONTINGENCY TABLE STRUCTURE:
+                        After Defense
+                    Success     Failure
+Before:  Success      a           b (blocked)
+         Failure      c (new)     d
+
+Test statistic: Chi-square = (|b - c| - 1)^2 / (b + c)  [with continuity correction]
+
+RESULTS:
+
+With Access Code:
+  Newly blocked (b):        11
+  Newly successful (c):     3
+  Chi-square statistic:     3.5000
+  p-value:                  0.0614
+  Significant (alpha=0.05): NO
+  Odds Ratio (b/c):         3.67
+
+Without Access Code:
+  Newly blocked (b):        9
+  Newly successful (c):     1
+  Chi-square statistic:     4.9000
+  p-value:                  0.0269
+  Significant (alpha=0.05): YES
+  Odds Ratio (b/c):         9.00
+
+INTERPRETATION:
+  - With Access Code: The defense improvement is NOT statistically significant.
+  - Without Access Code: The defense improvement is statistically significant.
+
+
+================================================================================
+SECTION 5: COMPARATIVE ANALYSIS
+================================================================================
+
+DEFENSE EFFECTIVENESS COMPARISON:
+
+                                With Code       Without Code    Difference
+--------------------------------------------------------------------------------
+Success Rate Reduction          21.1%            40.0%            +18.9%
+Effect Size (|h|)               0.567            0.927            +0.361
+p-value                         0.0614          0.0269          --
+Attacks Blocked                 11                 9                 -2
+Attacks Made Worse              3                 1                 -2
+
+WINNER BY METRIC:
+  - Higher Reduction:           Without Access Code
+  - Larger Effect Size:         Without Access Code
+  - Statistical Significance:   Without Access Code
+
+
+================================================================================
+SECTION 6: KEY FINDINGS AND CONCLUSIONS
+================================================================================
+
+FINDING 1: EFFECT SIZE
+Both scenarios show substantial effect sizes,
+indicating that the defense prompts have meaningful practical impact.
+- With Access Code: |h| = 0.567 (Medium)
+- Without Access Code: |h| = 0.927 (Large)
+
+FINDING 2: STATISTICAL SIGNIFICANCE
+Only the Without Access Code scenario shows statistically significant improvement (p < 0.05).
+
+FINDING 3: PRACTICAL IMPLICATIONS
+Systems without explicit access codes in system prompts show:
+- 18.9 percentage points better defense improvement
+- 0.361 larger effect size
+
+This suggests that explicit vulnerability indicators (like access codes) in 
+system prompts may make it harder to develop effective defenses, possibly 
+because attackers have a clear target to extract.
+
+FINDING 4: CONFIDENCE IN RESULTS
+The 95% confidence intervals provide uncertainty estimates:
+- Results are robust within the stated ranges
+- Smaller sample size for "Without Access Code" (n=20) results in wider intervals
+- Despite wider intervals, the difference remains meaningful
+
+
+================================================================================
+SECTION 7: RECOMMENDATIONS FOR REPORTING
+================================================================================
+
+ACADEMIC CITATION FORMAT:
+
+"Defense prompts reduced attack success rates by 21.1% 
+(95% CI: [3.5%, 37.7%]) for systems with access codes 
+(Cohen's h = 0.57, McNemar's p = 0.061) and by 
+40.0% (95% CI: [11.6%, 61.3%]) 
+for systems without access codes (Cohen's h = 0.93, 
+McNemar's p = 0.027). Both effect sizes are classified as 
+'Medium' and 'Large' respectively 
+according to Cohen's conventions."
+
+
+================================================================================
+SECTION 8: METHODOLOGY NOTES
+================================================================================
+
+STATISTICAL METHODS USED:
+
+1. Cohen's h Effect Size
+   - Measures magnitude of difference between proportions
+   - Independent of sample size
+   - Allows comparison across studies
+
+2. Wilson Score Confidence Intervals
+   - More accurate than normal approximation
+   - Performs well for small samples
+   - Handles proportions near 0 or 1
+
+3. McNemar's Test
+   - Appropriate for paired nominal data
+   - Tests marginal homogeneity
+   - Uses continuity correction for small samples
+
+4. Newcombe-Wilson Method
+   - For CI of difference between proportions
+   - Combines Wilson intervals appropriately
+
+LIMITATIONS:
+
+1. Sample sizes differ between scenarios (n=38 vs n=20)
+2. Only evaluated attacks with improved prompts
+3. Heuristic-based defense assessment
+4. Single iteration of defense improvement
+
+
+================================================================================
+END OF REPORT
+================================================================================
+
+Generated by: LLM Security Research Statistical Analysis Script
+Project: Duke University Cybersecurity 590
