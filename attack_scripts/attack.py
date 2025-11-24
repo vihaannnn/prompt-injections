@@ -1,3 +1,4 @@
+# Parts of this script were generated using Claude Code - 4.5 Sonnet - using the prompt "create a python script that takes each row of the given CSV and runs the corresponding attack on it, and stores the gpt response as a new column of the script"
 import csv
 import os
 from openai import OpenAI

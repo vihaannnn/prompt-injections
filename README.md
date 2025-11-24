@@ -26,11 +26,11 @@ We analyze two datasets:
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/optimized_judge.git
-cd optimized_judge
+git clone https://github.com/vihaannnn/prompt-injections.git
+cd prompt-injections
 
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 venv\Scripts\activate.bat
 
 # Install dependencies
@@ -42,11 +42,16 @@ pip install -r requirements.txt
 Set your OpenAI API key:
 ```cmd
 set OPENAI_API_KEY=sk-your-key-here
+set CSV_FILE_PATH=extraction_robustness_dataset_first100.csv
 ```
 
 Run complete workflow:
 ```cmd
 complete_workflow.bat
+```
+To run app 
+```
+streamlit run iterative_app.py
 ```
 
 This will:
@@ -93,6 +98,7 @@ optimized_judge/
 ├── models/                  # Trained models
 ├── results/                 # Evaluation outputs
 └── logs/                    # Execution logs
+└── attack_scripts/          # Scripts relating to attacking the model
 ```
 
 ## Performance
